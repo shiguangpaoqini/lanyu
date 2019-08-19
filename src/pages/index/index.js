@@ -1,49 +1,169 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
-
-import { add, minus, asyncAdd } from '../../actions/counter'
+import { AtButton, AtTabs, AtTabsPane, AtLoadMore } from 'taro-ui'
+import Feed from '../../components/feed/feed'
+import Request from '../../utils/request';
 
 import './index.scss'
 
-
-@connect(({ counter }) => ({
-  counter
-}), (dispatch) => ({
-  add () {
-    dispatch(add())
-  },
-  dec () {
-    dispatch(minus())
-  },
-  asyncAdd () {
-    dispatch(asyncAdd())
-  }
-}))
 class Index extends Component {
-
-    config = {
+  constructor() {
+    super(...arguments)
+    this.state = {
+      current: 0,
+      nextPage: 0,
+      status: 'more',
+      feedAll: [],
+      feedHot: [],
+      feedOrder: []
+    }
+  }
+  config = {
     navigationBarTitleText: '首页'
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentDidMount() {
+    this.fetchFeedOrderData()
+  }
+
+  componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps)
   }
 
-  componentWillUnmount () { }
+  fetchFeedAllData = () => {
+    const { feedAll, nextPage } = this.state
+    this.setState({
+      status: 'loading'
+    })
+    Request({
+      url: '/api/v1/article/feedAll',
+      method: 'GET',
+      data: {
+        page: nextPage
+      }
+    }).then(res => {
+      if (res.data.length) {
+        this.setState({
+          feedAll: [...feedAll, ...res.data],
+          nextPage: res.next_page,
+          status: 'more'
+        })
+      } else {
+        this.setState({
+          status: 'noMore'
+        })
+      }
 
-  componentDidShow () { }
+    })
+  }
 
-  componentDidHide () { }
+  fetchFeedHotData = () => {
+    const { feedHot, nextPage } = this.state
+    this.setState({
+      status: 'loading'
+    })
+    Request({
+      url: '/api/v1/article/feedHot',
+      method: 'GET',
+      data: {
+        page: nextPage
+      }
+    }).then(res => {
+      if (res.data.length) {
+        this.setState({
+          feedHot: [...feedHot, ...res.data],
+          nextPage: res.next_page,
+          status: 'more'
+        })
+      } else {
+        this.setState({
+          status: 'noMore'
+        })
+      }
+    })
+  }
 
-  render () {
+  fetchFeedOrderData = () => {
+    const { feedOrder, nextPage } = this.state
+    const userId = Taro.getStorageSync('user_info').user_id
+    this.setState({
+      status: 'loading'
+    })
+    Request({
+      url: '/api/v1/article/feedOrder',
+      method: 'GET',
+      data: {
+        page: nextPage,
+        userId
+      }
+    }).then(res => {
+      if (res.data.length) {
+        this.setState({
+          feedOrder: [...feedOrder, ...res.data],
+          nextPage: res.next_page,
+          status: 'more'
+        })
+      } else {
+        this.setState({
+          status: 'noMore'
+        })
+      }
+    })
+  }
+
+  handleClick = (value) => {
+    this.setState({
+      current: value,
+      nextPage: 0,
+      status: 'more',
+      feedAll: [],
+      feedHot: [],
+      feedOrder: []
+    }, () => {
+      if (value == 0) {
+        this.fetchFeedOrderData()
+      } else if (value == 1) {
+        this.fetchFeedHotData()
+      } else {
+        this.fetchFeedAllData()
+      }
+    })
+  }
+
+  render() {
+    const { status, feedAll, feedHot, feedOrder } = this.state
+    const tabList = [{ title: '我的订阅' }, { title: '热门文章' }, { title: '最新内容' }]
     return (
       <View className='index'>
-        <Button className='add_btn' onClick={this.props.add}>+</Button>
-        <Button className='dec_btn' onClick={this.props.dec}>-</Button>
-        <Button className='dec_btn' onClick={this.props.asyncAdd}>async</Button>
-        <View><Text>{this.props.counter.num}</Text></View>
-        <View><Text>Hello, World</Text></View>
+        <AtTabs tabList={tabList} current={this.state.current} onClick={this.handleClick}>
+          <AtTabsPane current={this.state.current} index={0} >
+            {!feedOrder.length ? <View className='no-data'>暂无数据</View> :
+              <View>
+                <Feed type={this.state.current} data={feedOrder}></Feed>
+                <AtLoadMore onClick={this.fetchFeedOrderData}
+                  status={this.state.status} moreBtnStyle='border:none;color: #444;' />
+              </View>
+            }
+          </AtTabsPane>
+          <AtTabsPane current={this.state.current} index={1} >
+            {!feedHot.length ? <View className='no-data'>暂无数据</View> :
+              <View>
+                <Feed type={this.state.current} data={feedHot}></Feed>
+                <AtLoadMore onClick={this.fetchFeedHotData}
+                  status={this.state.status} moreBtnStyle='border:none;color: #444;' />
+              </View>
+            }
+          </AtTabsPane>
+          <AtTabsPane current={this.state.current} index={2} >
+            {!feedAll.length ? <View className='no-data'>暂无数据</View> :
+              <View>
+                <Feed type={this.state.current} data={feedAll}></Feed>
+                <AtLoadMore onClick={this.fetchFeedAllData}
+                  status={this.state.status} moreBtnStyle='border:none;color: #444;' />
+              </View>
+            }
+          </AtTabsPane>
+        </AtTabs>
       </View>
     )
   }

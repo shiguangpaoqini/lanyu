@@ -1,0 +1,25 @@
+.at-list__item-thumb.item-thumb{
+  width: 100px;
+  height: 100px;
+  .taro-img.item-thumb__info{
+    border-radius: 50%;
+  }
+}
+.at-list__item-content.item-content{
+  margin-left: 20px;
+  .item-content__info-title{
+    font-size: 34px;
+    font-weight: 500;
+  }
+  .item-content__info-note{
+    font-size: 28px;
+    font-weight: 400;
+  }
+}
+// .order-page-title{
+//   color: #159963;
+//   font-size: 32px;
+//   line-height: 60px;
+//   border-bottom: 2px solid #159963;
+//   padding-left: 30px;
+// }

@@ -1,0 +1,40 @@
+.comments-list{
+  margin-top: 20px;
+}
+
+.comments-item{
+  display: flex;
+  padding-bottom: 20px;
+  // border-bottom: 1px solid #dadada;
+}
+
+.comments-item-avatar{
+  flex-shrink: 0;
+  margin-right: 30px;
+  width: 80px;
+  height: 80px;
+}
+
+.comment-item-time{
+  display: inline-block;
+  font-size: 26px;
+  color: #ccc;
+  margin-left: 60px;
+  font-weight: 400;
+}
+
+.comments-item-right{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .comments-item-nickname{
+    color: #333;
+    font-size: 30px;
+    font-weight: 500;
+  }
+  .comments-item-content{
+    color: #333;
+    font-size: 26px;
+    margin-top: 20px;
+  }
+}

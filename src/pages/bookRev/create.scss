@@ -1,0 +1,60 @@
+.type-picker{
+  width: 100%;
+  height: 20px;
+  .pick-content{
+
+  }
+}
+.form-item{
+  display: flex;
+  padding: 24px 0;
+  margin-left: 32px;
+  background-color: #FFF;
+  color: #333;
+  position: relative;
+}
+.form-item::after{
+  content: '';
+  position: absolute;
+  transform-origin: center;
+  box-sizing: border-box;
+  pointer-events: none;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  border: 0 solid #d6e4ef;
+  transform: scale(0.5);
+  border-bottom-width: 1PX;
+}
+.form-item-label{
+  display: inline-block;
+  font-size: 32px;
+  vertical-align: middle;
+  text-align: left;
+  margin-right: 32px;
+  width: 172px;
+}
+
+.form-book-review{
+  padding: 24px 0;
+  margin-left: 32px;
+  margin-right: 32px;
+  background-color: #FFF;
+  color: #333;
+  position: relative;
+}
+
+.form-book-review-label{
+  display: inline-block;
+  font-size: 32px;
+  vertical-align: middle;
+  text-align: left;
+  margin-right: 32px;
+  margin-bottom: 32px;
+}
+
+.create-btn{
+  margin-top: 100px;
+  width: 92%;
+}

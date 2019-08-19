@@ -1,0 +1,41 @@
+@import "~taro-ui/dist/style/index.scss";
+
+.at-list .at-list__item{
+  line-height: 2.3;
+  font-size: 18px;
+}
+.at-list .at-list__item::after{
+  left: 0;
+}
+.at-button.at-button--normal{
+  // background-color: #159963;
+  border-top: 1PX solid #ccc;
+  border-bottom: 1PX solid #ccc;
+}
+.at-button.at-button--primary{
+  background-color: #159963;
+  border-top: 1PX solid #159963;
+  border-bottom: 1PX solid #159963;
+}
+.at-form.at-form::after{
+  // border: none;
+}
+.taro-text.at-card-header__title{
+  font-size: 18px;
+  color: #159963;
+}
+.no-data{
+  text-align: center;
+  font-size: 32px;
+  margin-top: 40px;
+  color: #777;
+}
+.at-modal__content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.at-image-picker{
+  flex: 1;
+}
