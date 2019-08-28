@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
-import { AtButton, AtTabs, AtTabsPane, AtLoadMore } from 'taro-ui'
+import { View } from '@tarojs/components'
+import { AtTabs, AtTabsPane, AtLoadMore } from 'taro-ui'
 import Feed from '../../components/feed/feed'
 import Request from '../../utils/request';
 
@@ -124,7 +124,7 @@ class Index extends Component {
         this.fetchFeedOrderData()
       } else if (value == 1) {
         this.fetchFeedHotData()
-      } else {
+      } else if (value == 2){
         this.fetchFeedAllData()
       }
     })
@@ -140,8 +140,7 @@ class Index extends Component {
             {!feedOrder.length ? <View className='no-data'>暂无数据</View> :
               <View>
                 <Feed type={this.state.current} data={feedOrder}></Feed>
-                <AtLoadMore onClick={this.fetchFeedOrderData}
-                  status={this.state.status} moreBtnStyle='border:none;color: #444;' />
+                <AtLoadMore onClick={this.fetchFeedOrderData} status={status} moreBtnStyle='border:none;color: #444;' />
               </View>
             }
           </AtTabsPane>
@@ -149,8 +148,7 @@ class Index extends Component {
             {!feedHot.length ? <View className='no-data'>暂无数据</View> :
               <View>
                 <Feed type={this.state.current} data={feedHot}></Feed>
-                <AtLoadMore onClick={this.fetchFeedHotData}
-                  status={this.state.status} moreBtnStyle='border:none;color: #444;' />
+                <AtLoadMore onClick={this.fetchFeedHotData} status={status} moreBtnStyle='border:none;color: #444;' />
               </View>
             }
           </AtTabsPane>
@@ -158,8 +156,7 @@ class Index extends Component {
             {!feedAll.length ? <View className='no-data'>暂无数据</View> :
               <View>
                 <Feed type={this.state.current} data={feedAll}></Feed>
-                <AtLoadMore onClick={this.fetchFeedAllData}
-                  status={this.state.status} moreBtnStyle='border:none;color: #444;' />
+                <AtLoadMore onClick={this.fetchFeedAllData} status={status} moreBtnStyle='border:none;color: #444;' />
               </View>
             }
           </AtTabsPane>

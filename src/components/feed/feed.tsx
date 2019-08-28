@@ -9,7 +9,16 @@ import './feed.scss'
 
 dayjs.extend(relativeTime)
 
-export default class Feed extends Component<{},{}> {
+interface IProps {
+  data : any,
+  updateData : Function
+}
+
+interface IState {
+  isOpened : boolean
+}
+
+export default class Feed extends Component<IProps, IState> {
   userId: string;
   articleId: string;
   constructor (props) {

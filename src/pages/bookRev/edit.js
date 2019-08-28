@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image, RichText } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { AtButton, AtInput, AtTextarea, AtImagePicker } from 'taro-ui'
 import Request from '../../utils/request';
 import Tools from '../../utils/tools'
